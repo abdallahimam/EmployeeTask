@@ -1,0 +1,67 @@
+﻿@using EmployeeTask.Helpers;
+@{
+    ViewData["Title"] = "Home Page";
+    var Pager = ViewBag.Pager as Pagination;
+}
+
+<div class="container">
+   <h3 class="text-primary">Employees</h3>
+   <br />
+
+   @*<a id="AddNewEmployeeBtn" href="" class="btn btn-primary mb-3"></a>*@
+
+   <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+   </button>
+
+   <table id="Employees" class="table table-responsive table-striped table-bordered nowrap">
+      <thead>
+         <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Actions</th>
+         </tr>
+      </thead>
+   </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form method="post" id="AddNewEmployee">
+               <div class="mb-3">
+                  <label for="name" class="form-label">Employee Name</label>
+                  <input type="text" name="name" required class="form-control" id="name" aria-describedby="nameHelp">
+               </div>
+               <div class="mb-3">
+                  <label for="age" class="form-label">Employee Age</label>
+                  <input type="number" name="age" required min="21" class="form-control" id="age">
+               </div>
+               <div class="mb-3">
+                  <label for="address" class="form-label">Employee address</label>
+                  <input type="text" name="address" required class="form-control" id="address" aria-describedby="addressHelp">
+               </div>
+               
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="AddNewSubmit" type="submit" form="AddNewEmployee" class="btn btn-primary">Add Employee</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    
+    <script src="~/js/employees.js"></script>
+}
