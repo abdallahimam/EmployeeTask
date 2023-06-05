@@ -1,0 +1,28 @@
+﻿@model EmployeeTask.Models.AddressEdit
+
+
+<div class="modal fade" id="editAddress@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelEditAddress@(Model.Id)" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabelEditAddress@(Model.Id)">Edit Address (@Model.Description)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="UpdateAddress" asp-route-id="@(Model.Id)" asp-controller="Employee">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <input asp-for="Id" type="hidden" />
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" id="name">
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="updateEmployeeAddress@(Model.Id)" data-addressId="@(Model.Id)" type="submit" class="btn btn-primary update-address">Update Address</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

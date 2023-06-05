@@ -1,0 +1,40 @@
+﻿@model EmployeeTask.Models.EmployeeCreate
+
+
+<div class="modal fade" id="AddEmployee" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">New Employee</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Create" asp-controller="Employee" id="AddNewEmployee">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" id="name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Age" class="form-label"></label>
+                        <input asp-for="Age" class="form-control" id="age">
+                        <span class="text-danger" asp-validation-for="Age"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addresses[]" class="form-label">Addresses</label>
+                        <div class="row" id="rowAddresses">
+                            <input type="hidden" name="addressId" id="addressId" value="1" />
+                            <div class="col-10"><input id="addresses_1" class="form-control mb-2" name="addresses[]" type="text" /></div>
+                            <div class="col-2"><button type="button" class="btn btn-sm btn-light addresses-toggle" id="addNewAddress">NEW</button></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="AddNewSubmit" type="submit" class="btn btn-primary">Add Employee</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

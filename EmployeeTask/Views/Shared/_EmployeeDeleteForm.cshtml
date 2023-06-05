@@ -1,0 +1,25 @@
+﻿@model EmployeeTask.Models.EmployeeEdit
+
+
+<div class="modal fade" id="deleteEmployee@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelDelete@(Model.Id)" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabelDelete@(Model.Id)">Delete Employee (@Model.Name)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Delete" asp-route-id="@(Model.Id)" asp-controller="Employee">
+                    <div class="mb-3">
+                        <input asp-for="Id" type="hidden" value="@Model.Id" />
+                        <p class="text-muted">are you sure, you want to delete Employee (@Model.Name) and its addresses?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="deleteEmployee@(Model.Id)" data-employeeId="@(Model.Id)" type="submit" class="btn btn-primary delete-employee">Delete Employee</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

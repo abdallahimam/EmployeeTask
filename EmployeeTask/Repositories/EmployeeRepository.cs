@@ -62,9 +62,11 @@ namespace EmployeeTask.Repositories
             try
             {
                 var employee = await _dbContext.Employees.FindAsync(id);
+                if (employee == null)
+                    return -1;
+
                 employee.Name = model.Name;
                 employee.Age = model.Age;
-
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -80,7 +82,10 @@ namespace EmployeeTask.Repositories
             {
                 var employee = await _dbContext.Employees.FindAsync(id);
                 if (employee != null)
+                {
+                    _dbContext.Addresss.RemoveRange(_dbContext.Addresss.Where(a => a.EmployeeId == id).ToList());
                     _dbContext.Employees.Remove(employee);
+                }
                 if (_dbContext.ChangeTracker.HasChanges())
                     await _dbContext.SaveChangesAsync();
             }

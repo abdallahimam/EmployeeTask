@@ -1,0 +1,44 @@
+﻿@model EmployeeTask.Models.EmployeeEdit
+
+
+<div class="modal fade" id="editEmployee@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelEdit@(Model.Id)" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabelEdit@(Model.Id)">Edit Employee (@Model.Name)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Update" asp-route-id="@(Model.Id)" asp-controller="Employee">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <input asp-for="Id" type="hidden" />
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" id="name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Age" class="form-label"></label>
+                        <input asp-for="Age" class="form-control" id="age">
+                        <span class="text-danger" asp-validation-for="Age"></span>
+                    </div>
+                    <!--<div class="mb-3">
+                        <label for="addresses[]" class="form-label">Addresses</label>
+                        <div class="row" id="rowAddresses">
+                            <input type="hidden" name="addressId" id="addressId" value="1" />
+                            <div class="col-10"><input id="addresses_1" class="form-control mb-2" name="addresses[]" type="text" /></div>
+                            <div class="col-2"><button class="btn btn-sm btn-light" id="addNewAddress"><i class="fa-solid fa-square-plus"></i>NEW</button></div>
+                        </div>
+                        <input id="addresses_2" data-id="2" class="form-control mb-2" name="addresses[]" type="text" />
+
+                        <span class="text-danger" asp-validation-for="Address"></span>
+                    </div>-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="updateEmployee@(Model.Id)" data-employeeId="@(Model.Id)" type="submit" class="btn btn-primary update-employee">Update Employee</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

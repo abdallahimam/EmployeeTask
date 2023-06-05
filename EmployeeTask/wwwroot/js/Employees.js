@@ -1,38 +1,63 @@
 ﻿$(document).ready(function () {
 
+	//loadEmployeeData();
+
 	$('#Employees').dataTable({
-		processing: true,
-		serverside: true,
-		filter: false,
-		ordering: false,
-		lengthMenu: [2],
-		ajax: {
-			url: '/api/Employee',
-			type: 'POST',
-			datatype: 'json',
-			contentType: "application/json; charset=utf-8",
-			dataSrc: ""
+		"processing": true,
+		"serverSide": true,
+		"filter": false,
+		"ajax": {
+			"url": "/api/Employee",
+			"type": "POST",
+			"datatype": "json"
 		},
-		columnDefs: [
+		"lengthMenu": [2],
+		"columnDefs": [{
+			"targets": [0],
+			"visible": false,
+			"searchable": false
+		}],
+		"columns": [
+			{ "data": 'id', "name": 'Id', "autowidth": true },
+			{ "data": 'name', "name": 'Name', "autowidth": true },
+			{ "data": 'age', "name": 'Age', "autowidth": true },
+			{ "data": 'addresses[, <br /> ].description', "name": 'Addresses', "autowidth": true },
 			{
-				targets: [0],
-				visible: false,
-				searchable: false
-			}
-		],
-		columns: [
-			{ data: 'id', name: 'Id', autowidth: true },
-			{ data: 'name', name: 'Name', autowidth: true },
-			{ data: 'age', name: 'Age', autowidth: true },
-			{ data: 'addresses[, <br /> ].description', name: 'Addresses', autowidth: true },
-			{
-				data: null, render: function (data, type, row) { return '<a class="btn btn-info me-2" href="/Demo/Edit/' + row.id + '">Edit</a>' + '<a class="btn btn-danger me-2" href="/Demo/Delete/' + row.id + '">Delete</a>' }
+				"data": null,
+				"render": function (data, type, row) {
+					return '<a class="btn btn-info mr-2" href="/Demo/Edit/' + row.id + '">Edit</a>' + '<a class="btn btn-danger me-2" href="/Demo/Delete/' + row.id + '">Delete</a>'
+				}
 			}
 		],
 	});
 
+	$(".addresses-toggle").keydown(function (event) {
+		if (event.keyCode == 9 || event.keyCode == 13 || event.keyCode == 32) {
+			event.preventDefault();
+			return;
+		}
 
-	$("#AddNewEmployee").on("submit", function (event) {
+		var value = $(this).val() + "";
+		if (event.keyCode == 8) {
+			alert(value.trim().length);
+			if (value.trim().length - 1 > 0) {
+				$("#addNewAddress").prop("disabled", false);
+			}
+			else {
+				$("#addNewAddress").prop("disabled", true);
+			}
+			return;
+		}
+
+		if (value.trim().length + 1 > 0) {
+			$("#addNewAddress").prop("disabled", false);
+		}
+		else {
+			$("#addNewAddress").prop("disabled", true);
+		}
+	});
+
+	$("#AddNewEmployees").on("submit", function (event) {
 		event.preventDefault();
 		const form = new FormData(event.target);
 		var object = {};
@@ -56,4 +81,68 @@
 		});
 	});
 
+	$("#addNewAddress").on("click", function (event) {
+		event.preventDefault();
+		var rowAddresses = $("#rowAddresses");
+		var id = parseInt($("#addressId").val());
+		alert(id);
+		
+		var old = $("#addresses_" + id + "").val();
+		alert(old);
+		if (old.trim() == '') {
+			return;
+		}
+		id += 1;
+		var newAddressField = '<div class="col-10"><input id="addresses_' + id + '" class="form-control mb-2" name="addresses[]" type="text" /></div>';
+		$("#addressId").val(id);
+
+		rowAddresses.append(newAddressField);
+	});
+
 });
+
+function loadEmployeeData() {
+
+	var employeeData = [];
+	$.ajax({
+		type: "POST",
+		url: "/Employee/GetAll",
+		async: false,
+		success: function (data) {
+			$.each(data, function (key, value) {
+				var editbtn = "<a onclick='FunEditEmlpoyee(this)' class='btn btn-primary'>Edit</a>";
+				var removebtn = "<a onclick='FunRemoveEmlpoyee(this)' class='btn btn-danger'>Remove</a>";
+				var hdn = "<input type='hidden' value=" + value.id + " />";
+				var action = editbtn + " | " + removebtn + hdn;
+				empdata.push([value.code, value.name, value.email, value.phone, value.designation, action])
+			});
+		},
+		failure: function (err) {
+			alert(err);
+		}
+	});
+
+	$('#Employeess').dataTable({
+		data: employeeData
+	});
+}
+
+function FunEditEmlpoyee(element) {
+	var idStr = $(element).closest("tr").find("input[type=hidden]").val();
+	if (id == null || id == undefined)
+		return;
+
+}
+
+function validateName(field) {
+
+	if (name == null || name == undefined || name == "") {
+		return "Invalid value";
+	}
+	var name = field + "";
+	if (name.includes(" ")) {
+		return "Name shouldn't conatins whitespaces!!";
+	}
+
+	return name;
+}

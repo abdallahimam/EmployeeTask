@@ -53,13 +53,31 @@ namespace EmployeeTask.Repositories
             return model.Id;
         }
 
+        public async Task<int> AddRangeAsync(List<Address> model)
+        {
+            try
+            {
+                await _dbContext.Addresss.AddRangeAsync(model);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+
+            return 1;
+        }
+
         public async Task<int> UpdateAsync(int id, Address model)
         {
             try
             {
                 var address = await _dbContext.Addresss.FindAsync(id);
+                if (address == null)
+                    return -1;
                 address.Description = model.Description;
-
+                _dbContext.Addresss.Attach(address);
+                _dbContext.Entry(address).Property(x => x.Description).IsModified = true;
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)

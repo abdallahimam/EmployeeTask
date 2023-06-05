@@ -6,6 +6,7 @@ namespace EmployeeTask.Repositories
     public interface IAddressRepository
     {
         Task<int> AddAsync(Address model);
+        Task<int> AddRangeAsync(List<Address> model);
         Task<int> DeleteAsync(int id);
         Task<IList<AddressDto>> GetAddressesByWmployeeIdAsync(int employeeId);
         Task<IList<AddressDto>> GetAllAsync();
