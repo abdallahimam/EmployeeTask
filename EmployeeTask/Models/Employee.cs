@@ -6,7 +6,7 @@ namespace EmployeeTask.Models
     {
         public int Id { get; set; }
 
-        [RegularExpression("/^\\S*$/", ErrorMessage = "White spaces not allowed.")]
+        [RegularExpression("/^[a-zA-Z]*$/g", ErrorMessage = "White spaces not allowed.")]
         public string Name { get; set; }
 
         [Range(21, int.MaxValue, ErrorMessage = "Enter age greater than 20")]

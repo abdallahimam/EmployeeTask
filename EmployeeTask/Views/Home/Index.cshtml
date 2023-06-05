@@ -9,6 +9,21 @@
    <h3 class="text-primary">Employees</h3>
    <br />
 
+   @if(ViewBag.Success == true)
+    {
+       <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Success!</strong> @ViewBag.Message
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if(ViewBag.Success == false)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Error!</strong> @ViewBag.Message
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#AddEmployee">
       Add Employee
    </button>
@@ -41,7 +56,7 @@
                                    <div class="p-1 flex-grow-1 bd-highlight">@addr.Description</div>
                                    <div class="p-0 bd-highlight">
                                        <button type="button" 
-                                          class="btn  btn-sm btn-outline-success d-block h-100 rounded-0 edit-employee-address" 
+                                          class="btn  btn-sm btn-outline-success mb-sm-2 d-block h-100 rounded-0 edit-employee-address" 
                                           data-bs-toggle="modal" data-bs-target="@("#editAddress" + addr.Id)" 
                                           data-addressId="@addr.Id">Edit</button>
                                           @await Html.PartialAsync("_AddressEditForm", new AddressEdit { Id = addr.Id, Description = addr.Description })
@@ -58,7 +73,7 @@
                    </ul>
                 </td>
                 <td>
-                   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="@("#editEmployee" + emp.Id)">
+                   <button type="button" class="btn btn-success mb-sm-2" data-bs-toggle="modal" data-bs-target="@("#editEmployee" + emp.Id)">
                       Edit
                    </button>
 

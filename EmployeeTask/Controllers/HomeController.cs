@@ -3,6 +3,7 @@ using EmployeeTask.Helpers;
 using EmployeeTask.Models;
 using EmployeeTask.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EmployeeTask.Controllers
 {
@@ -47,6 +48,7 @@ namespace EmployeeTask.Controllers
         public async Task<IActionResult> Create(EmployeeCreate model)
         {
             var addressesStr = Request.Form["addresses[]"].ToList();
+            
             if (ModelState.IsValid)
             {
                 try
@@ -55,7 +57,6 @@ namespace EmployeeTask.Controllers
                     employee.Id = await _employeeRepository.AddAsync(employee);
                     var addresses = addressesStr.Select(p => new Address { Description = p, EmployeeId = employee.Id }).ToList();
                     await _addressRepository.AddRangeAsync(addresses);
-
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
